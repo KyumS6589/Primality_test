@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prime Verification using Logarithmic Functional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+        .box {
+            background: white;
+            padding: 25px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Prime Identifier (Log Functional)</h2>
+
+    <input type="number" id="numberInput" placeholder="Enter N (≥ 2)" min="2">
+    <button onclick="compute()">Compute F(N)</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+    function isPrime(n) {
+        if (n < 2) return false;
+        for (let i = 2; i * i <= n; i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+
+    function primesBelow(n) {
+        let primes = [];
+        for (let i = 2; i < n; i++) {
+            if (isPrime(i)) primes.push(i);
+        }
+        return primes;
+    }
+
+    function fractionalPart(x) {
+        return x - Math.floor(x);
+    }
+
+    function compute() {
+        const N = parseInt(document.getElementById("numberInput").value);
+        const output = document.getElementById("output");
+
+        if (N < 2 || isNaN(N)) {
+            output.innerHTML = "Please enter an integer ≥ 2.";
+            return;
+        }
+
+        let sum = 0;
+        let primes = primesBelow(N);
+
+        for (let p of primes) {
+            let frac = fractionalPart(N / p);
+
+            if (frac === 0) {
+                sum = Infinity;
+                break;
+            }
+
+            sum += Math.abs(Math.log(frac));
+        }
+
+        if (sum === Infinity) {
+            output.innerHTML =
+                `F(${N}) = ∞<br><span style="color:red">Composite Number</span>`;
+        } else {
+            output.innerHTML =
+                `F(${N}) = ${sum.toFixed(6)}<br><span style="color:green">Prime Number</span>`;
+        }
+    }
+</script>
+
+</body>
+</html>
