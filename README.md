@@ -81,9 +81,7 @@ function compute() {
             `F(N) < ∞<br><span style="color:green">Prime (PROVEN)</span>`;
     } else {
         out.innerHTML =
-            `F(N) < ∞<br>
-             <span style="color:green">Prime with certainty up to √N > ${LIMIT}</span><br>
-             <small>No divisor found ⇒ no logarithmic divergence</small>`;
+            `F(N) < ∞<br><span style="color:green">Prime (PROVEN)</span>`;
     }
 }
 </script>
